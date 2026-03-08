@@ -1,6 +1,9 @@
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 
+// Dashboard is always dynamic — requires auth context
+export const dynamic = "force-dynamic";
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#0D0D1A] flex">

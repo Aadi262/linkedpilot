@@ -46,7 +46,7 @@ export default function AccountsPage() {
           <p className="text-gray-500 text-sm mt-0.5">{ACCOUNTS.length} accounts · {ACCOUNTS.filter(a => a.status === "active").length} active</p>
         </div>
         <Link href="/onboarding">
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white gap-2">
+          <Button variant="primary" className="gap-2">
             <Plus className="w-4 h-4" /> Connect New Account
           </Button>
         </Link>

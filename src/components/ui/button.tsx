@@ -19,6 +19,15 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        // LinkedPilot design system
+        primary:
+          "bg-gradient-to-b from-violet-500 to-violet-700 text-white shadow-lg hover:shadow-violet-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-150",
+        "ghost-dark":
+          "bg-transparent border border-white/10 text-gray-300 hover:bg-white/8 hover:border-white/20 hover:text-white transition-all duration-150",
+        danger:
+          "bg-transparent border border-red-500/30 text-red-400 hover:border-red-500/60 hover:bg-red-500/10 transition-all duration-200",
+        "icon-ghost":
+          "p-2 rounded-lg bg-transparent text-gray-500 hover:bg-white/10 hover:text-gray-200 active:scale-95 transition-all duration-100",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

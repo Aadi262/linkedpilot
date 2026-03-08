@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Bell } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
+import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const pageTitles: Record<string, string> = {
@@ -31,7 +30,9 @@ export function Topbar() {
           <Bell className="w-4 h-4" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-violet-500 rounded-full" />
         </Button>
-        <UserButton afterSignOutUrl="/" appearance={{ baseTheme: undefined }} />
+        <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center cursor-pointer hover:bg-violet-700 transition-colors">
+          <User className="w-4 h-4 text-white" />
+        </div>
       </div>
     </header>
   );

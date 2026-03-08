@@ -46,7 +46,7 @@ export function AccountCard({ account }: { account: Account }) {
   const weeklyPct = (account.weeklyConnectionCount / 100) * 100;
 
   return (
-    <div className={`rounded-xl border p-5 bg-white/5 transition-all ${
+    <div className={`rounded-xl border p-5 bg-white/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/10 cursor-pointer ${
       status === "flagged" ? "border-red-500/40" : status === "frozen" ? "border-yellow-500/30" : "border-white/10"
     }`}>
       <div className="flex items-start justify-between mb-4">
@@ -61,8 +61,15 @@ export function AccountCard({ account }: { account: Account }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full flex items-center gap-1 ${cfg.color}`}>
-            <div className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full flex items-center gap-1.5 ${cfg.color} ${status === "frozen" ? "animate-pulse" : ""} ${status === "flagged" ? "ring-1 ring-red-500/50" : ""}`}>
+            {status === "active" ? (
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+              </span>
+            ) : (
+              <div className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+            )}
             {cfg.label}
           </span>
           <DropdownMenu>

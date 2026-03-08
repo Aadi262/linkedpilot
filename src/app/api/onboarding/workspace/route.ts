@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthUser } from "@/lib/auth";
+import { db } from "@/db";
+import { workspaces } from "@/db/schema";
 
 function slugify(name: string): string {
   return name
@@ -11,38 +13,26 @@ function slugify(name: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth();
+    const { userId } = await getAuthUser();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { name, useCase } = await req.json();
+    const { name } = await req.json();
     if (!name?.trim()) {
       return NextResponse.json({ error: "Workspace name is required" }, { status: 400 });
     }
 
     const slug = slugify(name) + "-" + Math.random().toString(36).slice(2, 7);
 
-    // In stub mode, return mock workspace
-    if (process.env.STUB_MODE === "true") {
-      const workspace = { id: `ws_${Date.now()}`, name: name.trim(), slug, plan: "starter", ownerId: userId };
-      console.log(`[Onboarding] Created workspace (stub):`, workspace);
-      return NextResponse.json({ data: workspace });
-    }
-
-    // Production: save to DB
-    const { getDb, schema } = await import("@/db");
-    const db = getDb();
-    if (!db) throw new Error("DB not available");
-
-    await db.insert(schema.workspaces).values({
+    const result = await db.insert(workspaces).values({
       name: name.trim(),
       slug,
       plan: "starter",
       ownerId: userId,
-    });
+    }).returning({ id: workspaces.id });
 
-    return NextResponse.json({ data: { slug } });
+    return NextResponse.json({ data: { id: result[0].id, slug } });
   } catch (error) {
     console.error("[Onboarding/workspace]", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
