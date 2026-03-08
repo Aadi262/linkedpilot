@@ -12,5 +12,7 @@ export function getDb() {
   return dbInstance
 }
 
+export const db = getDb()
+
 export type DB = ReturnType<typeof getDb>
 export { schema }
